@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>
+			div.gruppo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items:center;
+			padding-top: 3%;
+			padding-right:4%;
+			padding-left: 25%;
+			}
+			
+			.form{
+				display:flex;
+				flex-direction:column;
+				align-items:center;
+				justify-content:center;
+				padding-top:4%;
+			}
+			.col-12{
+				width:30%;
+				padding-top:4%;
+			}
+		</style>
+		</head>
+	<body>
+		<header th:replace="fragments/base.html :: intestazione"></header>
+		
+		<div class="gruppo">
+			<form th:action="@{/admin/controlloTorneo}" th:object="${torneo}" method="POST">
+			<table class="table table-hover">
+			  <thead>
+			    <tr>
+			      <th scope="col">#Codice Id</th>
+			      <th scope="col">Nome Torneo</th>
+			      <th scope="col">Descrizione</th>
+			      <th scope="col">Data Inizio</th>
+			      <th scope="col">Data Fine</th>
+			      <th scope="col">Data Inizio Iscrizioni</th>
+			      <th scope="col">Data Fine Iscrizioni</th>
+			      <th scope="col">Sala Partner Associata</th>
+			    </tr>
+			  </thead>
+			  <tbody th:each="torneo : ${tornei}">
+			    <tr>
+			      <th scope="row" th:text="${torneo.id}">codice</th>
+			      <td th:text="${torneo.nome}">Nome Torneo</td>
+			      <td th:text="${torneo.descrizione}">Descrizone Torneo</td>
+			      <td th:text="${torneo.dataInizio}">Data Innizio</td>
+			      <td th:text="${torneo.dataFine}">Data Fine</td>
+			      <td th:text="${torneo.dataInizioIscrizioni}">Data Innizio Iscrizioni</td>
+			      <td th:text="${torneo.dataFineIscrizioni}">Data Fine Iscrizioni</td>
+			      <td th:text="${torneo.sala.nome}">Data Fine Iscrizioni</td>
+			    </tr>
+			  </tbody>
+			</table>
+				<div class="form">
+			  	  <span>Scegli che torneo eliminare o modificare:</span>
+				  <select name = "torn" class="form-select">
+					<option th:each = "torneo : ${tornei}"
+							th:value = "|${torneo.nome}|" 
+							th:text = "|${torneo.nome}|">
+					</option>
+				  </select>	
+				   <div class="col-12">
+				    <button type="submit" name="elimina" class="btn btn-dark">Elimina</button>
+				    <button type="submit"  name="modifica" class="btn btn-dark">Modifica</button>
+				   </div>
+			   </div>
+			</form>
+		</div>
+	</body>
+</html>

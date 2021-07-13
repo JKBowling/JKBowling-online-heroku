@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>div.gruppo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding-top: 8%;
+			padding-left: 15%;
+		}
+
+		form.row{
+			margin: auto;
+			width:100%;
+			padding:7%;
+			text-align: center;
+			
+		}
+		
+		.card{
+			margin: auto;
+		}
+		
+		.card-body{
+			padding-top:0.01%;
+		}
+		
+		.card-header{
+			text-align:center;
+		}
+		
+		.button{
+			padding:auto;
+			width:30%;
+		}</style>
+	</head>
+		<body>
+			<th:block th:replace="fragments/base.html :: intestazione"></th:block>
+			<div class="gruppo">
+				<div class="card text-white bg-secondary mb-3" style="max-width: 40rem;">
+				  <h4 class="card-header "><strong>Login</strong></h4>
+				  <div class="card-body">
+					<form class="row g-3" th:action="@{/register}" method="POST">
+					  <div class="col-md-6">
+					    <label class="form-label">Nome:</label>
+					    <input type = "text" name = "nome" class="form-control" required>
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Cognome:</label>
+					    <input type = "text" name = "cognome" class="form-control" required>
+					  </div>
+					  <div class="col-12">
+					    <label for="inputAddress2" class="form-label">Data Nascita:</label>
+					    <input type = "date" name=dataNascita class="form-control" required >
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Soprannome:</label>
+					    <input type = "text" name = "soprannome" class="form-control" required>
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Indirizzo Email</label>
+					    <input type="email" name = "email" class="form-control" aria-describedby="emailHelp" required>
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Username:</label>
+					    <input type = "text" name = "username" class="form-control" required>
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Cellulare:</label>
+					    <input type = "text" name = "cellulare" class="form-control">
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Password</label>
+					    <input type = "password" name = "password" class="form-control" required>
+					  </div>
+					  <div class="col-12">
+					    <button type="submit" class="btn btn-dark">Registrati</button>
+					  </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

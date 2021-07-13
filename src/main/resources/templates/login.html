@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>
+		div.gruppo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding-top: 13%;
+			padding-left: 15%;
+		}
+		
+		.card{
+			margin: auto;
+			width:40%;
+			
+		}
+		
+		.card-header{
+			text-align:center;
+		}
+		
+		form{
+			display:flex;
+			flex-direction:column;
+			align-items:center;
+			justify-content:center;
+		}
+		
+		.button{
+			padding:auto;
+			width:30%;
+		}
+		</style>
+	</head>
+	<body>
+		<th:block th:replace="fragments/base.html :: intestazione"></th:block>
+		
+		<div class="gruppo">
+			<div class="card text-white bg-secondary mb-3" style="max-width: 25rem;">
+			  <h4 class="card-header "><strong>Login</strong></h4>
+			  <div class="card-body">
+			    <form th:action="@{/login}" id="login" method = "POST">
+				  <div class="mb-3">
+				    <label class="form-label">Username</label>
+				    <input name="username" type="text" class="form-control" required>
+				  </div>
+				  <div class="mb-3">
+				    <label class="form-label">Password</label>
+				    <input name="password" type="password" class="form-control" required>
+				  </div>
+				  <div class="button"><button type="submit" class="btn btn-dark" >Login</button></div>
+				</form>
+			  </div>
+			</div>
+		</div>
+	</body>
+</html>	

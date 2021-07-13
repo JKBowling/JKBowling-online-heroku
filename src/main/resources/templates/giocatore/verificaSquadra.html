@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>	form.row{
+				padding-top: 5%;
+				padding-left: 24%;
+				padding-right:4%;
+				width:100%;
+				text-align: center;
+			}
+			
+		h2{
+			text-align:center;
+			padding-left:20%;
+			padding-top:4%;
+		}
+		
+		.col-12{
+			display:flex;
+			justify-content:center;
+		}
+			
+		.col-12>div{
+			display:flex;
+			justify-content:center;
+			flex-direction:column; 
+			align-items:center;
+			width:30%;
+		}
+		</style>
+	</head>
+	<body>
+      <th:block th:replace="fragments/base.html :: intestazione"></th:block>
+	  
+	  <h2> Riepilogo dati squadra: </h2>
+	  <form class="row g-3" th:action="@{/controlloSquadra}" method="POST" th:object="${squadra}">
+		  <div class="col-md-6">
+		    <label class="form-label">Nome squadra</label>
+		    <input type = "text" th:field = "*{nome}" class="form-control" readonly>
+		  </div>
+		  <div class="col-md-6">
+		    <label class="form-label">Capitano</label>
+		    <input type="text" class="form-control" name="capitano" th:value="${capitano.codiceSquadra}" readonly>
+		    <span th:text="${capitano.nome + ' ' + capitano.cognome}"></span>
+		  </div>
+		  <div class="col-md-6">
+		    <label class="form-label">Giocatore #2</label>
+		    <input th:if="${giocatore2 != null}" name="giocatore2" type="text" class="form-control" th:value="${giocatore2.codiceSquadra}"readonly>
+		    <span th:if="${giocatore2 != null}" th:text="${giocatore2.nome + ' ' + giocatore2.cognome}"></span>
+		    <input th:unless="${giocatore2 != null}" type="text" class="form-control" readonly>
+		  </div>
+		  <div class="col-md-6">
+		    <label class="form-label">Giocatore #3</label>
+		    <input th:if="${giocatore3 != null}" name="giocatore3" type="text" class="form-control" th:value="${giocatore3.codiceSquadra}"readonly>
+		    <span th:if="${giocatore3 != null}" th:text="${giocatore3.nome + ' ' + giocatore3.cognome}"></span>
+		    <input th:unless="${giocatore3 != null}" type="text" class="form-control" readonly>
+		  </div>
+		  <div class="col-md-6">
+		    <label class="form-label">Giocatore #4</label>
+		    <input th:if="${giocatore4 != null}" name="giocatore4" type="text" class="form-control" th:value="${giocatore4.codiceSquadra}"readonly>
+		    <span th:if="${giocatore4 != null}" th:text="${giocatore4.nome + ' ' + giocatore4.cognome}"></span>
+		    <input th:unless="${giocatore4 != null}" type="text" class="form-control" readonly>
+		  </div>
+		  <div class="col-12">
+		    <div><button type="submit" name="avanti" class="btn btn-dark">Conferma</button></div>
+		    <div><button type="submit" name="indietro" class="btn btn-dark">Torna indietro</button></div>
+		  </div> 
+		</form>
+	</body>
+</html>

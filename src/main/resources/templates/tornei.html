@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>
+			#tornei{
+				display:flex;
+				justify-content:center;
+				flex-direction:column;
+				align-items:center;
+				padding-top:5%;
+				width:100%;
+				padding-left:20%;
+				padding-bottom:2%;
+				
+			}
+			
+			#tornei > a{
+			color:black;
+			
+			}
+			
+			.card{
+				width:75%;
+				position:unset;
+			}
+			
+			#admin{
+				display:flex;
+				flex-direction:column;
+				align-items:center;
+				justify-content:center;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<th:block th:replace="fragments/base.html :: intestazione"></th:block>
+
+		<div id="tornei">
+	    	<div  th:each="torneo : ${tornei}" class="card mb-3">
+	    	<a  style="color:black;" th:href = "@{'/torneo/'+${torneo.id}}">
+			  <div class="row g-0">
+			    <div class="col-md-4" th:if="${torneo.yes}">
+			      <img th:src="@{/images/belmonte.jpg}" class="img-fluid rounded-start" alt="...">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title" th:text="${torneo.nome}">Nome Torneo</h5>
+			        <p class="card-text" th:text="'Inizio Torneo:'+${torneo.dataInizio}">Data Inizio Torneo</p>
+			        <p class="card-text" th:text="'Fine Torneo:'+${torneo.dataFine}">Data Fine Tonreo</p>
+			        <p class="card-text" th:text="'Inizio Iscrizioni Torneo:'+${torneo.dataInizioIscrizioni}">Data Inizio Iscrizioni</p>
+			        <p class="card-text" th:text="'Fine Iscrizioni Torneo:'+${torneo.dataFineIscrizioni}">Data Fine Tonreo</p>
+			        <p th:if="${torneo.scadenza}" class="card-text" style="color:green;" th:text="${torneo.form}">Validità torneo</p>
+					<p th:unless="${torneo.scadenza}" class="card-text" style="color:red;" th:text="${torneo.form}">Validità torneo</p>
+			      </div>
+			    </div>
+			    <div class="col-md-4" th:unless="${torneo.yes}">
+			      <img th:src="@{/images/belmonte.jpg}" class="img-fluid rounded-start" alt="...">
+			    </div>
+			  </div>
+			</div>
+		   </a>
+		  </div>
+		</div>	
+	</body>
+</html>

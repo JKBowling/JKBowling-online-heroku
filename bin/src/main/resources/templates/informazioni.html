@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>div.gruppo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding-top: 1%;
+			padding-left: 15%;
+		}
+		div.card{
+			text-align: center;
+			margin: auto;
+		}
+		#contacts{
+			list-style-type: none;
+		}</style>
+	</head>
+	<body>
+		<header th:replace="fragments/base.html :: intestazione"></header>
+		<div class="gruppo">
+			<div class="card mb-3 my-5" style="width: 50%;">
+			  <img th:src="@{/images/chiSiamo.jpg}" class="card-img-top" alt="...">
+			  <div class="card-body">
+			    <h5 class="card-title">Nata per unire gli appassionati di questo sport</h5>
+			    <p class="card-text">La Lega Tornei J.K. Bowling nasce all'inizio del 2021: dopo una lunga assenza
+			    						forzata dalle piste da bowling, i suoi Fondatori volevano un modo per 
+			    						tornare a praticare con passione questa attività. E cosa c'è di meglio
+			    						di una sana competizione per motivare gli animi?</p>
+			  </div>
+			</div>
+			<div class="card mb-3" style="width: 50%;">
+			  <img th:src="@{/images/contactUs.jpg}" class="card-img-top" alt="...">
+			  <div class="card-body">
+			    <h5 class="card-title">Contattaci</h5>
+			    <p class="card-text">Hai dei suggerimenti, una nuova sala da proporre, o semplicemente 
+			    						vuoi fare due chiacchiere? Scrivici!</p>
+			    <ul id = "contacts">
+			    	<li><a href="https://it-it.facebook.com/" class="fa fa-facebook"></a>Lega Tornei J.K. Bowling</li>
+					<li><a href="https://www.instagram.com/accounts/login/" class="fa fa-instagram"></a>Lega_JKB</li>
+					<li class="fa fa-envelope">legajkb@asd.com</li>
+			    </ul>
+			  </div>
+			</div>
+			<div class="card mb-3" style="width: 50%;">
+			  <img th:src="@{/images/where.png}" class="card-img-top" alt="...">
+			  <div class="card-body">
+			    <h5 class="card-title">Dove siamo</h5>
+			    <p class="card-text">Vuoi passare da noi per un saluto, e magari portare qualche bel regalo?
+			    						Vieni a trovarci!</p>
+			    <p class="card-text">Puoi trovarci in Via dei Viali 104, Roma (RM)</p>
+			  </div>
+			</div>
+		</div>
+	</body>
+</html>

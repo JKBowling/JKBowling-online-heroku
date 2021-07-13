@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>body {
+		    background: #ccc;
+		}
+		.mytabs {
+		    display: flex;
+		    flex-wrap: wrap;
+		    padding-left:32%;
+		    padding-right:14%;
+		    padding-top:10%;
+		}
+		.mytabs input[type="radio"] {
+		    display: none;
+		}
+		.mytabs label {
+		    padding: 4.81%;
+		    background: #e2e2e2;
+		    font-weight: bold;
+		}
+		
+		.mytabs .tab {
+		    width: 100%;
+		    padding: 4.75%;
+		    background: #fff;
+		    order: 1;
+		    display: none;
+		}
+		div.tab{
+			background-color: #212529!important;
+			color: white;
+			text-align: center;
+		}
+		.mytabs .tab h2 {
+		    font-size: 3em;
+		    text-align: center;
+		}
+		
+		.mytabs input[type='radio']:checked + label + .tab {
+		    display: block;
+		}
+		
+		.mytabs input[type="radio"]:checked + label {
+		    background: #212529!important;
+		    color: white;
+		}
+		table.table{
+			border: white;
+		}
+		div.card{
+			color: #212529;
+			background-color: #e2e2e2;
+			margin: auto;
+		}
+		h3.warning{
+			color: red;
+		}</style>
+
+	</head>
+	<body>
+	  
+	  <th:block th:replace="fragments/base.html :: intestazione"></th:block>
+	 
+  	  <div class="mytabs">
+  	  
+	    <input type="radio" id="profilo" name="mytabs" checked="checked">
+	    <label for="profilo">Il mio profilo</label>
+	    <div class="tab">
+	      <h2>I tuoi dati</h2>
+	      <table class="table table-hover table-dark table-bordered">
+			<tr>
+				<th scope="row">Nome</th>
+				<td th:text="${giocatore.nome}">qui-nome</td>
+			</tr>
+			<tr>
+				<th scope="row">Cognome</th>
+				<td th:text="${giocatore.cognome}">qui-cognome</td>
+			</tr>
+			<tr>
+				<th scope="row">Soprannome</th>
+				<td th:text="${giocatore.soprannome}">qui-soprannome</td>
+			</tr>
+			<tr>
+				<th scope="row">Username</th>
+				<td th:text="${#authentication.getPrincipal().getUsername()}">qui-username</td>
+			</tr>
+			<tr>
+				<th scope="row">Email</th>
+				<td th:text="${giocatore.email}">qui-email</td>
+			</tr>
+	      </table>				
+	    </div>
+	
+	    <input type="radio" id="squadra" name="mytabs">
+	    <label for="squadra">Squadra</label>
+	    <div class="tab" th:if="${giocatore.squadra!= null}">
+	      <h2 th:text="${giocatore.squadra.nome}">qui-nome-squadra</h2>
+			<table class="table table-hover table-dark table-bordered">
+				<tr>
+					<th scope="col">Giocatori</th>
+					<th scope="col">Nome</th>
+					<th scope="col">Cognome</th>
+					<th scope="col">Soprannome</th>
+					<th scope="col">Codice Squadra</th>
+				</tr>
+				<tr th:each="giocatore : ${giocatore.squadra.giocatori}">
+					<td>#</td>
+					<td th:text="${giocatore.nome}">qui-nome</td>
+					<td th:text="${giocatore.cognome}">qui-cognome</td>
+					<td th:text="${giocatore.soprannome}">qui-soprannome</td>
+					<td th:text="${giocatore.codiceSquadra}">qui-codiceSquadra</td>
+				</tr>
+			</table>	
+			<div th:if="${giocatore.isCapitano == true}">
+				<a th:href="@{/giocatore/modificaSquadra}">Modifica dati squadra</a>
+				<h3 class = "warning"> ATTENZIONE! ELIMINANDO LA SQUADRA RIMUOVERAI DA ESSA TUTTI I GIOCATORI CHE NE FANNO PARTE! </h3>
+				<form th:action="@{/giocatore/eliminaSquadra}" method = "POST"><button>Elimina la squadra dal portale</button></form>
+			</div>	        
+	    </div>
+	    <div class="tab" th:unless="${giocatore.squadra != null}">
+	    	<h3> Non fai ancora parte di una squadra </h3>
+	    	<p>	Comunica il tuo codice squadra al tuo capitano per permettergli di aggiungerti!</p>
+	    	<p> Sei tu il capitano? <a th:href="@{/creaSquadra}">Registra la tua squadra sul portale!</a></p>
+	    </div>
+	
+	    <input type="radio" id="codice" name="mytabs">
+	    <label for="codice">Codice Squadra</label>
+	    <div class="tab">
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body">
+			  	<h5 class="card-title" th:text="${giocatore.codiceSquadra}">qui-codice</h5>
+			    <p class="card-text">Questo è il tuo Codice Squadra personale. Comunicalo al tuo capitano per permettergli
+			    						di aggiungerti alla squadra sul portale.</p>
+			    <p th:if="${giocatore.squadra == null}"> Sei tu il capitano? <a th:href="@{/creaSquadra}">Registra la tua squadra sul portale!</a></p>
+			  </div>
+			</div>
+	    </div>
+	    
+	    <input type="radio" id="tornei" name="mytabs">
+	    <label for="tornei">I miei tornei</label>
+	   	<div class="tab" th:if="${giocatore.squadra != null}">
+	   	
+			<table class="table table-hover table-dark table-bordered" th:if="${giocatore.squadra.torneo != null}">
+				<tr>
+					<th scope="row">Nome</th>
+					<td th:text="${giocatore.squadra.torneo.nome}">qui-nome</td>
+				</tr>
+				<tr>
+					<th scope="row">Descrizione</th>
+					<td th:text="${giocatore.squadra.torneo.descrizione}">qui-descrizione</td>
+				</tr>
+				<tr>
+					<th scope="row">Data di inizio</th>
+					<td th:text="${giocatore.squadra.torneo.dataInizio}">qui-inizio</td>
+				</tr>
+				<tr>
+					<th scope="row">Data di fine</th>
+					<td th:text="${giocatore.squadra.torneo.dataFine}">qui-fine</td>
+				</tr>
+				<tr>
+					<th scope="row">Quota di iscrizione</th>
+					<td th:text="${giocatore.squadra.torneo.quotaIscrizione}">qui-quota</td>
+				</tr>
+				<tr>
+					<th scope="row">Sala da bowling</th>
+					<td th:text="${giocatore.squadra.torneo.sala.nome}">qui-sala</td>
+				</tr>
+			</table>
+			
+			<div class="card" style="width: 18rem;" th:unless="${giocatore.squadra.torneo != null}">
+			  <div class="card-body">
+			  	<h5 class="card-title">La tua squadra non è ancora iscritta ad un torneo</h5>
+			    <p class="card-text"><a th:href="@{/tornei}">Consulta i tornei in fase di iscrizione!</a></p>
+			  </div>
+			</div>
+			
+	    </div>
+		<div class="tab"  th:unless="${giocatore.squadra != null}">
+			<h3> Non fai ancora parte di una squadra </h3>
+		   	<p>	Per partecipare ad un torneo devi far parte di una squadra. Comunica il tuo codice squadra al tuo capitano per permettergli di aggiungerti!</p>
+		   	<p> Sei tu il capitano? <a th:href="@{/creaSquadra}">Registra la tua squadra sul portale!</a></p>
+		</div>
+		
+  	  </div>
+	</body>
+</html>

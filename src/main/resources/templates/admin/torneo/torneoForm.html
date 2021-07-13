@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>
+			div.gruppo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items:center;
+			padding-top: 3%;
+			padding-right:4%;
+			padding-left: 25%;
+			}
+		
+			
+			#input_code{
+				display:flex;
+				align-items:center;
+				justify-content:space-between;
+			}
+			
+			#input_code>span{
+				padding-left:6%;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<header th:replace="fragments/base.html :: intestazione"></header>
+		<div class="gruppo">
+			<h2>INSERISCI DATI DEL TORNEO</h2>
+			<form class="row g-3" th:action="@{/admin/nuovoTorneo}" th:object="${torneo}">
+			  <div class="col-md-6">
+			    <label for="inputEmail4" class="form-label">Nome:</label>
+			    <input type = "nome" name="nome" th:text="${torneo.nome}" th:field = "*{nome}" class="form-control" required>
+			  </div>
+			  <div class="col-12">
+			    <label for="inputAddress" class="form-label">Data Inizio Iscrizioni:</label>
+			    <input type = "date" name="dataInizioIscrizioni" th:text="${torneo.dataInizioIscrizioni}" th:field = "*{dataInizioIscrizioni}" class="form-control" required>
+			  </div>
+			  <div class="col-12">
+			    <label for="inputAddress2" class="form-label">Data Fine Iscrizioni:</label>
+			    <input type = "date"  name="dataFineIscrizioni" th:text="${torneo.dataFineIscrizioni}" th:field = "*{dataFineIscrizioni}" class="form-control" required >
+			  </div>
+			  <div class="col-md-6">
+			    <label for="inputAddress2" class="form-label">Data Inizio Torneo:</label>
+			    <input type = "date" name="dataInizio" th:text="${torneo.dataInizio} "th:field = "*{dataInizio}" class="form-control" required>
+			  </div>
+			  <div class="col-md-6">
+			    <label for="inputCity" class="form-label">Data Fine Torneo:</label>
+			    <input type = "date" name="dataFine" th:text="${torneo.dataFine}" th:field = "*{dataFine}" class="form-control" required>
+			  </div>
+			  <div class="col-md-2">
+			    <label for="inputZip" class="form-label">Quota Iscrizione:</label>
+			    <input type = "quotaIscrizione" name ="quotaIscrizione" th:text="${torneo.quotaIscrizione}" th:field = "*{quotaIscrizione}" class="form-control" id="inputZip" required >
+			  </div>
+			  <div>
+			  	  <span>Sala:</span>
+				  <select name = "link" class="form-select">
+					<option th:each = "sala : ${sale}"
+							th:value = "|${sala.link}|" 
+							th:text="|${sala.nome}|">
+					</option>
+				  </select>	
+			  </div>
+			  <div class="col-md-6">
+			    <label for="inputPassword4" class="form-label">Descrizione:</label>
+			    <textarea type="descrizione" name="descrizione" th:text="${torneo.descrizione}" th:field = "*{descrizione}"  cols="20" rows="10" class="form-control" required></textarea>
+			  </div>
+			  <div class="col-12">
+			    <button type="submit" name="inserisci" class="btn btn-dark">Inserisci</button>
+			  </div>
+			</form>
+			<a th:href="@{/admin}">Annulla inserimento</a>
+		</div>
+	</body>
+</html>

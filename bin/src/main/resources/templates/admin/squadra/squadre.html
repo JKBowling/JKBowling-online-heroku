@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>
+			div.gruppo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items:center;
+			padding-top: 3%;
+			padding-right:3%;
+			padding-left: 25%;
+			}
+
+		</style>
+		</head>
+	<body>
+		<header th:replace="fragments/base.html :: intestazione"></header>
+		
+		<div class="gruppo">
+			
+				<table class="table table-hover">
+				  <thead>
+				    <tr>
+				      <th scope="col">#Codice Id</th>
+				      <th scope="col">Nome Squadra</th>
+				      <th scope="col">Anno Fondazione</th>
+				      <th scope="col">Tornei Vinti</th>
+				    </tr>
+				  </thead>
+				  <tbody name="sal" th:each="squadra : ${squadre}">
+				    <tr>
+				      <th scope="row"  th:text="${squadra.id}">Id</th>
+				      <td th:field="${nome}" th:text="${squarda.nome}">Nome Squadra</td>
+				      <td th:text="${squadra.annoFondazione}">Anno Fondazione</td>
+				      <td th:text="${squadra.torneiVinti}">Tornei Vinti</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<form th:action="@{/admin/eliminaSquadra}">
+					<div>
+				  	  <span>Scegli che squadra eliminare:</span>
+					  <select name = "sala" class="form-select">
+						<option th:each = "squadra : ${squadre}"
+								th:value = "|${squadra.nome}|" 
+								th:text = "|${squadra.nome}|">
+						</option>
+					  </select>	
+					   <div class="col-12">
+					    <button type="submit" class="btn btn-dark">Elimina</button>
+					   </div>
+				   </div>
+				</form>
+		 </div>
+	</body>
+</html>

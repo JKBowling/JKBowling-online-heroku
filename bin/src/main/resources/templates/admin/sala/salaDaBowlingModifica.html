@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>		
+			div.gruppo{
+			padding-top: 2%;
+			padding-left: 45%;
+			padding-bottom:3%;
+			}
+			
+			.h2{
+				text-align:left;
+			}
+			
+			#input_code{
+				display:flex;
+				align-items:center;
+				justify-content:space-between;
+			}
+			
+			#input_code>span{
+				padding-left:6%;
+			}
+			
+			h5,h2{
+				padding-top:2%;
+			}
+			
+			.button{
+				width:20%;
+				display:flex;
+				
+			}
+			
+		</style>
+	</head>
+	<body>
+		<header th:replace="fragments/base.html :: intestazione"></header>
+		<div class="gruppo">
+			<div class="h2"><h2>DATI DELLA SALA PARTNER</h2></div>
+			<form class="row g-3" th:action="@{/admin/modificaSala}" method="POST">
+				<div class="dati">
+				  <div class="col-md-6">
+				    <label class="form-label">Id della sala</label>
+				    <input type = "text" name = "id" th:value="${sala.id}" class="form-control" readonly>
+				  </div>	
+				  <div class="col-md-6">
+				    <label class="form-label">Nome:</label>
+				    <input type = "text" name = "nome" th:value="${sala.nome}" th:field = "${sala.nome}" class="form-control" required>
+				  </div>	  
+				 <div class="col-md-6">
+				    <label class="form-label">Descrizione:</label>
+				    <textarea  name = "descrizione" th:field="${sala.descrizione}" th:value = "${sala.descrizione}"  cols="20" rows="10" class="form-control" required></textarea>
+				  </div> 
+				  <div class="col-md-6">
+				    <label class="form-label">Sito web:</label>
+				    <input type = "url" name = "link" th:value="${sala.link}" th:field = "${sala.link}" class="form-control" required>
+				  </div>
+				  <div class="col-md-6">
+					<label class="form-label">Indirizzo</label>
+					<input type = "text" name = "indirizzo" th:value="${sala.indirizzo}" th:field = "${sala.indirizzo}" class="form-control" required>
+				  </div>
+				  <!--
+				  <h5>Indirizzo:</h5>
+				  <div th:object="${indirizzo}">
+					  <div class="col-md-6">
+					    <label class="form-label">Via:</label>
+					    <input type = "text"   th:value="${indirizzo.via}" th:field = "${indirizzo.via}" class="form-control" required>
+					  </div>
+					  <div class="col-md-2">
+					    <label class="form-label">Civico:</label>
+					    <input type = "text"  th:value="${indirizzo.civico}" th:field = "${indirizzo.civico}" class="form-control" id="inputZip" required >
+					  </div>
+					  <div class="col-md-2">
+					    <label class="form-label">CAP:</label>
+					    <input type = "text"  th:value="${indirizzo.cap}" th:field = "${indirizzo.cap}" class="form-control" id="inputZip" required >
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Città:</label>
+					    <input type = "text"  th:value="${indirizzo.citta}" th:field = "${indirizzo.citta}" class="form-control" required>
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Provincia:</label>
+					    <input type = "text"  th:value="${indirizzo.provincia}" th:field = "${indirizzo.provincia}" class="form-control" required>
+					  </div>
+					  <div class="col-md-6">
+					    <label class="form-label">Nazione:</label>
+					    <input type = "text"   th:value="${indirizzo.nazione}" th:field = "${indirizzo.nazione}" class="form-control" required>
+					  </div>
+				  	</div>
+				  	-->
+				</div> 
+			  <div class="col-12">
+			    <div class="button"><button type="submit" class="btn btn-dark">Aggiorna dati</button></div>
+			  </div>
+			</form>
+			<a th:href="@{/admin}">Annulla modifica</a>
+		</div>
+	</body>
+</html>

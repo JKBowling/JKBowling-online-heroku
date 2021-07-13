@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>div.gruppo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding-top: 5%;
+			padding-left: 12%;
+			padding-right:-2%;
+		}
+		div.card{
+			text-align: center;
+			margin: auto;
+			width: 60%;
+			height:10%;
+		}
+		div.team_det{
+			border: 2px solid grey;
+		}
+		table.table{
+			vertical-align: bottom;
+			border: white;
+		}
+		img.team_logo{
+			border-right: 2px solid grey;
+			width: 100%;
+			height: 100%;
+		}</style>
+	</head>
+	<body>
+		<th:block th:replace="fragments/base.html :: intestazione"></th:block>
+		
+		<div class="gruppo">
+		
+			<div th:replace="fragments/defaultHoF.html :: defaultHoF"></div>	
+		
+			<div class="card mb-3 bg-dark text-white" th:each="squadra : ${squadre}">
+			  <div class="row g-0 team_det">
+			    <div class="col-md-4">
+			      <img th:src="@{${'/images/' + squadra.nome + '.jpg'}}" class="team_logo img-fluid rounded-start" alt="Logo Squadra"/>
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			       <h5 class="card-title" th:text="${squadra.nome}">qui-nome-squadra</h5>
+			       <p class="card-text" th:text="${squadra.torneiVinti}">qui-tornei-vinti</p>
+					<table class="table table-hover table-dark table-bordered">
+						<tr>
+							<th scope="col">Giocatori</th>
+							<th scope="col">Nome</th>
+							<th scope="col">Cognome</th>
+							<th scope="col">Soprannome</th>
+						</tr>
+						<tr th:each="giocatore : ${squadra.giocatori}">
+							<td>#</td>
+							<td th:text="${giocatore.nome}">qui-nome</td>
+							<td th:text="${giocatore.cognome}">qui-cognome</td>
+							<td th:text="${giocatore.soprannome}">qui-soprannome</td>
+						</tr>
+					</table>			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+		</div>
+	</body>
+</html>	

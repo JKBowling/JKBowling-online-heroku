@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>
+		div.gruppo{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items:center;
+			padding-top: 3%;
+			padding-right:3%;
+			padding-left: 25%;
+			}
+		
+		div.card{
+			position:unset;
+			width:90%;
+		}</style>
+	</head>
+	<body>
+	
+		<th:block th:replace="fragments/base.html :: intestazione"></th:block>
+		<div class="gruppo">
+			<div class="card mb-3" style="max-width: 740px;" th:each = "salaDaBowling : ${saleDaBowling}">
+			  <div class="row g-0">
+			    <div class="col-md-4" th:if="${salaDaBowling.yes} ">
+			      <iframe th:src="${'https://www.google.com/maps?q='+ salaDaBowling.indirizzo + ' &output=embed'}" 
+			      					width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title"><a th:href = "@{${salaDaBowling.link}}" th:text="${salaDaBowling.nome}"></a></h5>
+			        <p class="card-text" th:text="${salaDaBowling.indirizzo}"></p>
+			      </div>
+			    </div>
+			    <div class="col-md-4" th:unless="${salaDaBowling.yes} ">
+			      <iframe th:src="${'https://www.google.com/maps?q=' + salaDaBowling.indirizzo + ' &output=embed'}" 
+			      					width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</body>
+</html>

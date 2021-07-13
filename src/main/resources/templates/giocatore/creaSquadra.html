@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+		<style th:replace="fragments/base.html :: style"></style>
+		<style>	form.row{
+				padding-top: 5%;
+				padding-left: 25%;
+				padding-right:5%;
+				width:100%;
+				text-align: center;
+			}
+		.col-12{
+			display:flex;
+			justify-content:center;
+		}
+			
+		.col-12>div{
+			display:flex;
+			justify-content:center; 
+			align-items:center;
+			width:30%;
+		}
+		
+		</style>
+	</head>
+	<body>
+	  <th:block th:replace="fragments/base.html :: intestazione"></th:block>
+	  
+	  <form class="row g-3" th:action="@{/verificaSquadra}" method="POST" th:object="${squadra}">
+		  <div class="col-md-6">
+		    <label class="form-label">Nome squadra</label>
+		    <input type = "text" th:field = "*{nome}" class="form-control" required>
+		  </div>
+		  <div class="col-md-6">
+		    <label class="form-label">Codice Capitano</label>
+		    <input name="capitano" type="text" class="form-control" th:value="${capitano.codiceSquadra}" readonly>
+		  </div>
+		  <div class="col-md-6">
+		    <label class="form-label">Codice Squadra Giocatore #2</label>
+		    <input th:if="${giocatore2 != null}" name="giocatore2" type="text" class="form-control" th:value="${giocatore2.codiceSquadra}">
+		    <input th:unless="${giocatore2 != null}" name="giocatore2" type="text" class="form-control" required>
+		  </div>
+		  <div class="col-md-6">
+		    <label class="form-label">Codice Squadra Giocatore #3</label>
+		   	<input th:if="${giocatore3 != null}" name="giocatore3" type="text" class="form-control" th:value="${giocatore3.codiceSquadra}">
+		    <input th:unless="${giocatore3 != null}" name="giocatore3" type="text" class="form-control" required>
+		  </div>
+		  <div class="col-md-6">
+		    <label class="form-label">Codice Squadra Giocatore #4</label>
+		    <input th:if="${giocatore4 != null}" name="giocatore4" type="text" class="form-control" th:value="${giocatore4.codiceSquadra}">
+		    <input th:unless="${giocatore4 != null}" name="giocatore4" type="text" class="form-control" required>
+		  </div>
+		  <div class="col-12">
+			<div><button type="submit" class="btn btn-dark">Avanti</button></div>
+		  </div>
+		</form>
+	</body>
+</html>
