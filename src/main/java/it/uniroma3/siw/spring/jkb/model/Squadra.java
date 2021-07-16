@@ -33,6 +33,7 @@ public class Squadra {
 	
 	public Squadra() {
 		this.giocatori=new ArrayList<>();
+		this.torneo=null;
 	}
 	
 	

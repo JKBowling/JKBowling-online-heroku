@@ -55,5 +55,23 @@
 			<div><button type="submit" class="btn btn-dark">Avanti</button></div>
 		  </div>
 		</form>
+		
+		<table class="table table-hover">
+			  <thead>
+			    <tr>
+			      <th scope="col">#Codice Id</th>
+			      <th scope="col">Nome Giocatore</th>
+			      <th scope="col">cognome</th>
+			      <th scope="col">soprannome</th>
+			    </tr>
+			  </thead>
+			  <tbody th:each="giocatore : ${giocatori}">
+			    <tr>
+			      <th scope="row" th:text="${giocatore.id}">codice</th>
+			      <td th:text="${giocatore.nome}">Nome Torneo</td>
+			      <td th:text="${giocatore.cognome}">Nome Torneo</td>
+			      <td th:text="${giocatore.soprannome}">Descrizone Torneo</td>
+			    </tr>
+			  </tbody>
 	</body>
 </html>

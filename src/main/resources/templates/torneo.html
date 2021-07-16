@@ -1,156 +1,144 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
-		<style th:replace="fragments/base.html :: style"></style>
-		<style>
-		.torneo{
-			display:flex;
-			flex-direction:column;
-			justify-content: center;
-			align-items:center;
-			padding-top:3%;
-			padding-left:15%;
-			padding-bottom:3%;
-		}
-		
-		#titolo{
-			text-align:center;
-		}
-		
-		h3{
-			text-transform: uppercase;
-		}
-		
-		.col-12{
-			padding-left:25%;
-			display:flex;
-			width:65%;
-			align-items:center;
-			justify-content:center;
-		}
-		form.row{
-				padding-top: 5%;
-				padding-left: 25%;
-				padding-right:5%;
-				width:100%;
-				text-align: center;
-				margin: auto;
-		}
-		.mex{
-			color:red;
-		}
-		</style>
-	</head>
-	<body>
-		<th:block th:replace="fragments/base.html :: intestazione"></th:block>
-		<form class="row g-3 w-75 p-5" th:action="@{/iscrizione}"  th:if="${torneo.scadenza}" sec:authorize="isAuthenticated()" method = "POST">
-			<div class="torneo"  th:object"${torneo}" >
-				<div id="titolo">
-					<h3 th:text="${torneo.nome}"></h3>
-					<small class="text-muted">PBA - Professional Bowlers Association</small>
-				</div>
-				<div class="card mb-4" style="width:65%;">
-			  		<img th:src="@{/images/belmonte.jpg}" class="card-img-top" alt="...">
-		  			<div class="card-body">
-			    		<h5 class="card-title">INFORMAZIONI TORNEO:</h5>
-			    		<div class="col-md-6">
-					    	<label class="form-label">Nome torneo</label>
-					    	<input name = "nome" type = "text" th:value = "${torneo.nome}" class="form-control" readonly>
-			  			</div>
-			  			<div class="col-md-6">
-					    	<label class="form-label">Desrcizione</label>
-					    	<input name = "descrizione" type = "text" th:value = "${torneo.descrizione}" class="form-control" readonly>
-			  			</div>
-			  			<div class="col-md-6">
-					    	<label class="form-label">Data inizio torneo</label>
-					    	<input name = "dataInizio" type = "text" th:value = "${torneo.dataInizio}" class="form-control" readonly>
-			  			</div>
-			  			<div class="col-md-6">
-					    	<label class="form-label">Data fine torneo</label>
-					    	<input name = "dataFine" type = "text" th:value = "${torneo.dataFine}" class="form-control" readonly>
-			  			</div>
-			  			<div class="col-md-6">
-					    	<label class="form-label">Data apertura iscrizioni</label>
-					    	<input name = "dataInizioIscrizioni" type = "text" th:value = "${torneo.dataInizioIscrizioni}" class="form-control" readonly>
-			  			</div>
-			  			<div class="col-md-6">
-					    	<label class="form-label">Data chiusura iscrizioni</label>
-					    	<input name = "dataFineIscrizioni" type = "text" th:value = "${torneo.dataFineIscrizioni}" class="form-control" readonly>
-			  			</div>
-			  			<div class="col-md-6">
-					    	<p th:if="${torneo.scadenza}" class="list-group-item" style="color:green;" th:text="${torneo.form}" readonly>Validità torneo</p>
-			  				<p th:unless="${torneo.scadenza}" class="list-group-item" style="color:red;" th:text="${torneo.form}" readonly>Validità torneo</p>
-			  			</div>
-			  			<!--
-			    		<ul class="list-group list-group-flush">
-						  <li class="list-group-item" th:text="'Nome Torneo:&emsp;'+${torneo.nome}">Nome torneo: </li>
-						  <li class="list-group-item" th:text="'Descrizione:&emsp;'+*{torneo.descrizione}">Descrizione: </li>
-						  <li class="list-group-item" th:text="'Inizio Torneo:&emsp;'+${torneo.dataInizio}">Data inizio torneo:</li>
-						  <li class="list-group-item" th:text="'Fine Torneo:&emsp;'+${torneo.dataFine}">Data fine torneo:</li>
-						  <li class="list-group-item" th:text="'Inizio Iscrizioni:&emsp;'+${torneo.dataInizioIscrizioni}">Data inizio iscrizioni:</li>
-						  <li class="list-group-item" th:text="'Fine Iscrizioni:&emsp;'+${torneo.dataFineIscrizioni}">Data fine iscrizioni:</li>
-						  <li th:if="${torneo.scadenza}" class="list-group-item" style="color:green;" th:text="${torneo.form}">Validità torneo</li>
-						  <li th:unless="${torneo.scadenza}" class="list-group-item" style="color:red;" th:text="${torneo.form}">Validità torneo</li>
-						</ul>
-						-->
-		  			</div>
-				</div>
-				<button sec:authorize="isAuthenticated()"> Iscriviti </button>
-			</form>
-			<form class="row g-3 w-75 p-5" th:action="@{/iscrizione}"  th:if="${torneo.scadenza}" sec:authorize = "isAnonymous()">
-				<div class="torneo"  th:object"${torneo}" >
-					<div id="titolo">
-						<h3 th:text="${torneo.nome}"></h3>
-						<small class="text-muted">PBA - Professional Bowlers Association</small>
-					</div>
-					<div class="card mb-4" style="width:65%;">
-				  		<img th:src="@{/images/belmonte.jpg}" class="card-img-top" alt="...">
-			  			<div class="card-body">
-				    		<h5 class="card-title">INFORMAZIONI TORNEO:</h5>
-				    		<div class="col-md-6">
-						    	<label class="form-label">Nome torneo</label>
-						    	<input name = "nome" type = "text" th:value = "${torneo.nome}" class="form-control" readonly>
-				  			</div>
-				  			<div class="col-md-6">
-						    	<label class="form-label">Desrcizione</label>
-						    	<input name = "descrizione" type = "text" th:value = "${torneo.descrizione}" class="form-control" readonly>
-				  			</div>
-				  			<div class="col-md-6">
-						    	<label class="form-label">Data inizio torneo</label>
-						    	<input name = "dataInizio" type = "text" th:value = "${torneo.dataInizio}" class="form-control" readonly>
-				  			</div>
-				  			<div class="col-md-6">
-						    	<label class="form-label">Data fine torneo</label>
-						    	<input name = "dataFine" type = "text" th:value = "${torneo.dataFine}" class="form-control" readonly>
-				  			</div>
-				  			<div class="col-md-6">
-						    	<label class="form-label">Data apertura iscrizioni</label>
-						    	<input name = "dataInizioIscrizioni" type = "text" th:value = "${torneo.dataInizioIscrizioni}" class="form-control" readonly>
-				  			</div>
-				  			<div class="col-md-6">
-						    	<label class="form-label">Data chiusura iscrizioni</label>
-						    	<input name = "dataFineIscrizioni" type = "text" th:value = "${torneo.dataFineIscrizioni}" class="form-control" readonly>
-				  			</div>
-				  			<div class="col-md-6">
-						    	<p th:if="${torneo.scadenza}" class="list-group-item" style="color:green;" th:text="${torneo.form}" readonly>Validità torneo</p>
-				  				<p th:unless="${torneo.scadenza}" class="list-group-item" style="color:red;" th:text="${torneo.form}" readonly>Validità torneo</p>
-				  			</div>
-				  			<!--
-				    		<ul class="list-group list-group-flush">
-							  <li class="list-group-item" th:text="'Nome Torneo:&emsp;'+${torneo.nome}">Nome torneo: </li>
-							  <li class="list-group-item" th:text="'Descrizione:&emsp;'+*{torneo.descrizione}">Descrizione: </li>
-							  <li class="list-group-item" th:text="'Inizio Torneo:&emsp;'+${torneo.dataInizio}">Data inizio torneo:</li>
-							  <li class="list-group-item" th:text="'Fine Torneo:&emsp;'+${torneo.dataFine}">Data fine torneo:</li>
-							  <li class="list-group-item" th:text="'Inizio Iscrizioni:&emsp;'+${torneo.dataInizioIscrizioni}">Data inizio iscrizioni:</li>
-							  <li class="list-group-item" th:text="'Fine Iscrizioni:&emsp;'+${torneo.dataFineIscrizioni}">Data fine iscrizioni:</li>
-							  <li th:if="${torneo.scadenza}" class="list-group-item" style="color:green;" th:text="${torneo.form}">Validità torneo</li>
-							  <li th:unless="${torneo.scadenza}" class="list-group-item" style="color:red;" th:text="${torneo.form}">Validità torneo</li>
-							</ul>
-							-->
-			  			</div>
-					</div>
-					<div style="color:red" sec:authorize = "isAnonymous()">Per prendere parte a questo torneo devi essere registrato e devi aver effettuato l'accesso</div>
-				</form>
-	</body>
+  <head>
+    <th:block th:replace = "fragments/base.html :: bootstrap"></th:block>
+    <style th:replace="fragments/base.html :: style"></style>
+    <style>
+    .torneo{
+      display:flex;
+      flex-direction:column;
+      justify-content: center;
+      align-items:center;
+      padding-top:3%;
+      padding-left:15%;
+      padding-bottom:3%;
+    }
+    
+    #titolo{
+      text-align:center;
+    }
+    
+    h3{
+      text-transform: uppercase;
+    }
+    
+    .col-12{
+      padding-left:25%;
+      display:flex;
+      width:65%;
+      align-items:center;
+      justify-content:center;
+    }
+    form.row{
+        padding-top: 5%;
+        padding-left: 25%;
+        padding-right:5%;
+        width:100%;
+        text-align: center;
+        margin: auto;
+    }
+    .mex{
+      color:red;
+    }
+    div.none{
+      padding-top: 5%;
+      padding-left: 25%;
+      padding-right:5%;
+    }
+    </style>
+  </head>
+  <body>
+    <th:block th:replace="fragments/base.html :: intestazione"></th:block>
+    <form class="row g-3 w-75 p-5" th:action="@{/iscrizione}"  th:if="${torneo.scadenza && giocatore.squadra != null}" sec:authorize="isAuthenticated()" method = "POST">
+      <div class="torneo"  th:object"${torneo}" >
+        <div id="titolo">
+          <h3 th:text="${torneo.nome}"></h3>
+          <small class="text-muted">PBA - Professional Bowlers Association</small>
+        </div>
+        <div class="card mb-4" style="width:65%;">
+            <img th:src="@{/images/belmonte.jpg}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">INFORMAZIONI TORNEO:</h5>
+              <div class="col-md-6">
+                <label class="form-label">Nome torneo</label>
+                <input name = "nome" type = "text" th:value = "${torneo.nome}" class="form-control" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Desrcizione</label>
+                <input name = "descrizione" type = "text" th:value = "${torneo.descrizione}" class="form-control" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Data inizio torneo</label>
+                <input name = "dataInizio" type = "text" th:value = "${torneo.dataInizio}" class="form-control" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Data fine torneo</label>
+                <input name = "dataFine" type = "text" th:value = "${torneo.dataFine}" class="form-control" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Data apertura iscrizioni</label>
+                <input name = "dataInizioIscrizioni" type = "text" th:value = "${torneo.dataInizioIscrizioni}" class="form-control" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Data chiusura iscrizioni</label>
+                <input name = "dataFineIscrizioni" type = "text" th:value = "${torneo.dataFineIscrizioni}" class="form-control" readonly>
+              </div>
+              <div class="col-md-6">
+                <p th:if="${torneo.scadenza}" class="list-group-item" style="color:green;" th:text="${torneo.form}" readonly>Validità torneo</p>
+                <p th:unless="${torneo.scadenza}" class="list-group-item" style="color:red;" th:text="${torneo.form}" readonly>Validità torneo</p>
+              </div>
+            </div>
+        <div th:if="${giocatore.squadra.torneo == null}">
+          <button sec:authorize="isAuthenticated()"> Iscriviti </button>
+        </div>
+        <div th:unless="${giocatore.squadra.torneo == null}">
+          <p> La tua squadra è già iscritta ad un torneo </p>
+        </div>
+      </form>
+      <form class="row g-3 w-75 p-5" th:action="@{/iscrizione}"  th:if="${torneo.scadenza}" sec:authorize = "isAnonymous()">
+        <div class="torneo"  th:object"${torneo}" >
+          <div id="titolo">
+          <h3 th:text="${torneo.nome}"></h3>
+            <small class="text-muted">PBA - Professional Bowlers Association</small>
+          </div>
+          <div class="card mb-4" style="width:65%;">
+              <img th:src="@{/images/belmonte.jpg}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">INFORMAZIONI TORNEO:</h5>
+                <div class="col-md-6">
+                  <label class="form-label">Nome torneo</label>
+                  <input name = "nome" type = "text" th:value = "${torneo.nome}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Desrcizione</label>
+                  <input name = "descrizione" type = "text" th:value = "${torneo.descrizione}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Data inizio torneo</label>
+                  <input name = "dataInizio" type = "text" th:value = "${torneo.dataInizio}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Data fine torneo</label>
+                  <input name = "dataFine" type = "text" th:value = "${torneo.dataFine}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Data apertura iscrizioni</label>
+                  <input name = "dataInizioIscrizioni" type = "text" th:value = "${torneo.dataInizioIscrizioni}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Data chiusura iscrizioni</label>
+                  <input name = "dataFineIscrizioni" type = "text" th:value = "${torneo.dataFineIscrizioni}" class="form-control" readonly>
+                </div>
+                <div class="col-md-6">
+                  <p th:if="${torneo.scadenza}" class="list-group-item" style="color:green;" th:text="${torneo.form}" readonly>Validità torneo</p>
+                  <p th:unless="${torneo.scadenza}" class="list-group-item" style="color:red;" th:text="${torneo.form}" readonly>Validità torneo</p>
+                </div>
+              </div>
+          </div>
+          <div style="color:red" sec:authorize = "isAnonymous()">Per prendere parte a questo torneo devi essere registrato e devi aver effettuato l'accesso</div>
+        </form>
+        <div class = "none" th:unless = "${giocatore.squadra != null}">
+          <h2> Per visualizzare i dettagli dei tornei devi far parte di una squadra </h2>
+        </div>
+  </body>
 </html>

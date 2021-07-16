@@ -36,7 +36,11 @@ public class NavigationController {
 
 	@RequestMapping(value = "/tornei", method = RequestMethod.GET)
 	public String tornei(Model model) {
-		model.addAttribute("tornei",this.torneoService.tutti());
+		List<Torneo> tornei=this.torneoService.tutti();
+		for(Torneo t : tornei) {
+			this.torneoService.controlloDate(t,t.getDataInizio(),t.getDataFine(),t.getDataInizioIscrizioni(),t.getDataFineIscrizioni());
+		}
+		model.addAttribute("tornei",tornei);
 		return "tornei.html";
 	}
 

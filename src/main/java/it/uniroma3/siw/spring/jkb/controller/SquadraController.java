@@ -1,7 +1,9 @@
 package it.uniroma3.siw.spring.jkb.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,6 +52,7 @@ public class SquadraController {
 		
 		model.addAttribute("squadra", new Squadra());
 		model.addAttribute("capitano", capitano);
+		model.addAttribute("giocatori",this.giocatoreService.tutti());
 		
 		return "/giocatore/creaSquadra.html";
 	}
@@ -89,6 +92,7 @@ public class SquadraController {
 			
 			List<Giocatore> team = new ArrayList<>();
 			
+			
 			Giocatore cpt = this.giocatoreService.reclutaGiocatore(capitano).get(0);
 			team.add(cpt);
 			
@@ -108,6 +112,9 @@ public class SquadraController {
 			squadra.getGiocatori().get(0).setIsCapitano(true);
 			
 			this.squadraService.inserisci(squadra);
+			
+			model.addAttribute("giocatore",cpt);
+			
 			
 			return "/giocatore/home.html";
 			
@@ -142,8 +149,9 @@ public class SquadraController {
 
 		 for(Giocatore g : squadra.getGiocatori())
 			 g.setSquadra(null);
-
-		 squadra.getTorneo().getSquadreIscritte().remove(squadra);
+		 
+		 if(squadra.getTorneo()!=null)
+			 squadra.getTorneo().getSquadreIscritte().remove(squadra);
 
 		 this.squadraService.eliminaSquadra(squadra);
 

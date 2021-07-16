@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.uniroma3.siw.spring.jkb.model.Credentials;
+import it.uniroma3.siw.spring.jkb.model.Giocatore;
 import it.uniroma3.siw.spring.jkb.model.SalaDaBowling;
 import it.uniroma3.siw.spring.jkb.model.Squadra;
 import it.uniroma3.siw.spring.jkb.model.Torneo;
+import it.uniroma3.siw.spring.jkb.service.CredentialsService;
 import it.uniroma3.siw.spring.jkb.service.SalaDaBowlingService;
 import it.uniroma3.siw.spring.jkb.service.TorneoService;
 import it.uniroma3.siw.spring.jkb.validator.TorneoValidator;
@@ -29,6 +33,9 @@ public class TorneoController {
 
 	@Autowired
 	private TorneoService torneoService;
+	
+	@Autowired
+	private CredentialsService credentialsService;
 
 	@Autowired
 	private SalaDaBowlingService salaDaBowlingService;
@@ -44,10 +51,16 @@ public class TorneoController {
 	}
 
 	@RequestMapping(value = "/torneo/{id}", method = RequestMethod.GET)
-	public String getOpera(@PathVariable("id") Long id, Model model) {
+	public String getTorneo(@PathVariable("id") Long id, Model model) {
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		if(credentials != null) {
+			Giocatore user = credentials.getGiocatore();
+			model.addAttribute("giocatore", user);
+		}
 		Torneo t=this.torneoService.getTorneo(id);
 		this.torneoService.controlloDate(t, t.getDataInizio(),t.getDataFine(),t.getDataInizioIscrizioni(),t.getDataFineIscrizioni());
-		model.addAttribute("torneo", this.torneoService.getTorneo(id));
+		model.addAttribute("torneo",  t);
 		return "torneo.html";
 
 	}
@@ -105,15 +118,15 @@ public class TorneoController {
 
 	@RequestMapping(value="/admin/modificaTorneo",method= {RequestMethod.POST})
 	public String controlloModificheTorneo(@RequestParam("id") Long id,
-											@RequestParam("nome")String nome,
-											@RequestParam("descrizione")String descrizione,
-											@RequestParam("dataInizioIscrizioni")String dataInizioIscrizioni,
-											@RequestParam("dataFineIscrizioni")String dataFineIscrizioni,
-											@RequestParam("dataInizio")String dataInizio,
-											@RequestParam("dataFine")String dataFine,
-											@RequestParam("quotaIscrizione")String quota,
-											@RequestParam("link")String link,
-											Model model) {
+			@RequestParam("nome")String nome,
+			@RequestParam("descrizione")String descrizione,
+			@RequestParam("dataInizioIscrizioni")String dataInizioIscrizioni,
+			@RequestParam("dataFineIscrizioni")String dataFineIscrizioni,
+			@RequestParam("dataInizio")String dataInizio,
+			@RequestParam("dataFine")String dataFine,
+			@RequestParam("quotaIscrizione")String quota,
+			@RequestParam("link")String link,
+			Model model) {
 
 		DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate localDateInizio = LocalDate.parse(dataInizio, formatter);
@@ -123,7 +136,7 @@ public class TorneoController {
 
 		SalaDaBowling s = this.salaDaBowlingService.salaPerLink(link).get(0);
 		this.torneoService.modificaTorneo(nome, descrizione, localDateInizio, localDateFine, localDateInizioIscrizioni, localDateFineIscrizioni, quota, s, id);
-		
+
 		model.addAttribute("tornei",this.torneoService.tutti());
 		return "admin/torneo/tornei.html";
 	}
